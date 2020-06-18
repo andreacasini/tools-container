@@ -1,3 +1,20 @@
+## Build
+docker build -t andreacasini/ansible .  
+
+## Run the container
+docker run --name ansible -it -v /Users/User01/ansible:/root/ansible andreacasini/ansible:latest  
+
+## Start the container
+docker start ansible
+
+## Enter the container
+docker attach ansible
+
+## Stop the container
+docker stop ansible
+
+## Dockerfile
+
 FROM centos
 
 RUN dnf update -y \
@@ -13,7 +30,7 @@ RUN dnf update -y \
 && rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.6/powershell-6.2.6-1.rhel.7.x86_64.rpm \
 && pwsh -c 'Install-Module -Name VMware.PowerCLI -Scope AllUsers -SkipPublisherCheck -AcceptLicense -Force' \
 && pwsh -c 'Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false' \
-&& dnf install sshpass -y \ 
+&& dnf install sshpass -y \
 && yum clean all \
 && rm -rf /var/cache/yum \
 && curl -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
