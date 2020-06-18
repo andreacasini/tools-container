@@ -41,6 +41,7 @@ RUN dnf update -y \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.11/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-11 \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
 && chmod +x /usr/local/bin/kubectl-1* \
-&& ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl
+&& ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
+&& echo "v1.1! > /root/version.txt
 
 CMD [ "/bin/bash" ]
