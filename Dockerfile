@@ -35,6 +35,12 @@ RUN dnf update -y \
 && echo "alias tp='terraform plan | grep -E \"#\"'" >> ~/.bashrc \
 && echo "termcapinfo xterm* ti@:te@" >> ~/.screenrc \
 && echo "defscrollback 2000000" >> ~/.screenrc \
-&& git config --global http.sslVerify false
+&& git config --global http.sslVerify false \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-4 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.7/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-7 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.11/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-11 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
+&& chmod +x /usr/local/bin/kubectl-1* \
+&& ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl
 
 CMD [ "/bin/bash" ]
