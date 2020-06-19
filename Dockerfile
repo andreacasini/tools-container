@@ -53,6 +53,6 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bi
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl
 
-RUN echo "v1.3.2" > /root/version.txt
+RUN echo "v1.3.3" > /root/version.txt
 
 CMD [ "/bin/bash" ]
