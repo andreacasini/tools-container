@@ -4,7 +4,6 @@ RUN dnf update -y \
 && dnf install python3-pip -y \
 && dnf install vim nano curl git iproute wget libicu epel-release -y \
 && dnf install screen bash-completion -y \
-&& kubectl completion bash >/etc/bash_completion.d/kubectl \
 && pip3 install --upgrade pip \
 && pip install --upgrade ansible \
 && pip install --upgrade pyvmomi \
