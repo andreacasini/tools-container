@@ -3,7 +3,8 @@ FROM centos
 RUN dnf update -y \
 && dnf install python3-pip -y \
 && dnf install vim nano curl git iproute wget libicu epel-release -y \
-&& dnf install screen -y \
+&& dnf install screen bash-completion -y \
+&& kubectl completion bash >/etc/bash_completion.d/kubectl \
 && pip3 install --upgrade pip \
 && pip install --upgrade ansible \
 && pip install --upgrade pyvmomi \
@@ -52,6 +53,6 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bi
 && chmod +x /usr/local/bin/kubectl-1* \
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl
 
-RUN echo "v1.3" > /root/version.txt
+RUN echo "v1.3.1" > /root/version.txt
 
 CMD [ "/bin/bash" ]
