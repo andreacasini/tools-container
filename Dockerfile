@@ -59,7 +59,12 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && git clone --depth 1 https://github.com/junegunn/fzf.git /opt/fzf \
 && /opt/fzf/install --all
 
-RUN echo "v1.3.5" > /root/version.txt
+RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.gz \
+&& tar xzvf /tmp/helm.tar.gz -C /tmp \
+&& cp /tmp/linux-amd64/helm /usr/local/bin/ \
+&& rm -rf /tmp/helm.tar.gz /tmp/linux-amd64
+
+RUN echo "v1.3.6" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
