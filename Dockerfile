@@ -53,7 +53,13 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bi
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl
 
-RUN echo "v1.3.4" > /root/version.txt
+RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
+&& ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
+&& ln -s /opt/kubectx/kubens /usr/local/bin/kubens \
+&& git clone --depth 1 https://github.com/junegunn/fzf.git /opt/fzf \
+&& /opt/fzf/install --all
+
+RUN echo "v1.3.5" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
