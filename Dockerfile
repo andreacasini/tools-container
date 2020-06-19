@@ -62,9 +62,10 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.gz \
 && tar xzvf /tmp/helm.tar.gz -C /tmp \
 && cp /tmp/linux-amd64/helm /usr/local/bin/ \
-&& rm -rf /tmp/helm.tar.gz /tmp/linux-amd64
+&& rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
+&& helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.6" > /root/version.txt
+RUN echo "v1.3.7" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
