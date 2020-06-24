@@ -53,7 +53,9 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bi
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl \
 && echo "alias k='kubectl'" >> ~/.bashrc \
-&& echo 'complete -F __start_kubectl k' >> ~/.bashrc
+&& echo 'complete -F __start_kubectl k' >> ~/.bashrc \
+&& echo "alias kctx='kubectx'" >> .bashrc \
+&& echo "alias kns='kubens'" >> .bashrc
 
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
