@@ -53,13 +53,13 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bi
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl \
 && echo "alias k='kubectl'" >> ~/.bashrc \
-&& echo 'complete -F __start_kubectl k' >> ~/.bashrc \
-&& echo "alias kctx='kubectx'" >> .bashrc \
-&& echo "alias kns='kubens'" >> .bashrc
+&& echo 'complete -F __start_kubectl k' >> ~/.bashrc
 
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
 && ln -s /opt/kubectx/kubens /usr/local/bin/kubens \
+&& echo "alias kctx='kubectx'" >> ~/.bashrc \
+&& echo "alias kns='kubens'" >> ~/.bashrc \
 && git clone --depth 1 https://github.com/junegunn/fzf.git /opt/fzf \
 && /opt/fzf/install --all
 
@@ -69,7 +69,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.11" > /root/version.txt
+RUN echo "v1.3.12" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
