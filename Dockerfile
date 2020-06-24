@@ -67,7 +67,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.8" > /root/version.txt
+RUN echo "v1.3.10" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
