@@ -19,7 +19,7 @@ RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.6/p
 RUN yum clean all \
 && rm -rf /var/cache/yum
 
-RUN curl -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
+RUN curl -L https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
 && chmod +x /usr/local/bin/terraform
 
 RUN curl -L https://github.com/vmware/govmomi/releases/download/v0.23.0/govc_linux_amd64.gz | gunzip > /usr/local/bin/govc \
@@ -45,9 +45,9 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 
 RUN git config --global http.sslVerify false
 
-RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.4/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-4 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.7/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-7 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.11/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-11 \
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-4 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-7 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-11 \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
 && chmod +x /usr/local/bin/kubectl-1* \
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
@@ -69,7 +69,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.12" > /root/version.txt
+RUN echo "v1.3.13" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
