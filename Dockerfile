@@ -45,9 +45,9 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 
 RUN git config --global http.sslVerify false
 
-RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-4 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-7 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-11 \
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-5 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-8 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-12 \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
 && chmod +x /usr/local/bin/kubectl-1* \
 && ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
