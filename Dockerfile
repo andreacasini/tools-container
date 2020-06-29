@@ -50,7 +50,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bi
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-12 \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
 && chmod +x /usr/local/bin/kubectl-1* \
-&& ln -s /usr/local/bin/kubectl-1-18-4 /usr/local/bin/kubectl \
+&& ln -s /usr/local/bin/kubectl-1-18-5 /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl \
 && echo "alias k='kubectl'" >> ~/.bashrc \
 && echo 'complete -F __start_kubectl k' >> ~/.bashrc
