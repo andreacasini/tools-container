@@ -40,6 +40,7 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 && echo "alias ta='terraform apply -auto-approve'" >> ~/.bashrc \
 && echo "alias ta2='terraform apply -auto-approve -parallelism=2'" >> ~/.bashrc \
 && echo "alias tp='terraform plan | grep -E \"#\"'" >> ~/.bashrc \
+&& echo "alias cat='bat -p'" \
 && echo "termcapinfo xterm* ti@:te@" >> ~/.screenrc \
 && echo "defscrollback 2000000" >> ~/.screenrc
 
@@ -69,7 +70,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.13" > /root/version.txt
+RUN echo "v1.3.14" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
