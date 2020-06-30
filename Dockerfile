@@ -40,7 +40,7 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 && echo "alias ta='terraform apply -auto-approve'" >> ~/.bashrc \
 && echo "alias ta2='terraform apply -auto-approve -parallelism=2'" >> ~/.bashrc \
 && echo "alias tp='terraform plan | grep -E \"#\"'" >> ~/.bashrc \
-&& echo "alias cat='bat -p'" \
+&& echo "alias cat='bat -p'" >> ~/.bashrc \
 && echo "termcapinfo xterm* ti@:te@" >> ~/.screenrc \
 && echo "defscrollback 2000000" >> ~/.screenrc
 
