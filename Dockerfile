@@ -2,7 +2,7 @@ FROM centos
 
 RUN dnf update -y \
 && dnf install python3-pip -y \
-&& dnf install vim nano curl git iproute wget libicu epel-release -y \
+&& dnf install vim nano curl git iproute wget bind-utils libicu epel-release -y \
 && dnf install screen bash-completion openldap-clients -y \
 && pip3 install --upgrade pip \
 && pip install --upgrade ansible \
@@ -70,7 +70,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.14" > /root/version.txt
+RUN echo "v1.3.15" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
