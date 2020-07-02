@@ -35,6 +35,7 @@ RUN rm -f /root/anaconda* \
 RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~/.bashrc \
 && echo "alias ls='ls --color'" >> ~/.bashrc \
 && echo "alias ll='ls -l'" >> ~/.bashrc \
+&& echo "alias rm='rm -f'" >> ~/.bashrc \
 && echo "alias t='terraform'" >> ~/.bashrc \
 && echo "alias tv='terraform validate'" >> ~/.bashrc \
 && echo "alias ta='terraform apply -auto-approve'" >> ~/.bashrc \
@@ -61,6 +62,28 @@ RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.1.2/kuberlr_0
 && echo "alias k='kubectl'" >> ~/.bashrc \
 && echo 'complete -F __start_kubectl k' >> ~/.bashrc
 
+RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.4.10.tar.gz -o /tmp/openshift-client-linux-4.4.10.tar.gz \
+&& mkdir /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.4.10.tar.gz -C /tmp/openshift-client \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.4.10 \
+&& rm -rf /tmp/openshift* \
+&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.28/openshift-client-linux-4.3.28.tar.gz -o /tmp/openshift-client-linux-4.3.28.tar.gz \
+&& mkdir /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.3.28.tar.gz -C /tmp/openshift-client \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.3.28 \
+&& rm -rf /tmp/openshift* \
+&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.36/openshift-client-linux-4.2.36.tar.gz -o /tmp/openshift-client-linux-4.2.36.tar.gz \
+&& mkdir /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.2.36.tar.gz -C /tmp/openshift-client \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.2.36 \
+&& rm -rf /tmp/openshift* \
+&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.41/openshift-client-linux-4.1.41.tar.gz -o /tmp/openshift-client-linux-4.1.41.tar.gz \
+&& mkdir /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.1.41.tar.gz -C /tmp/openshift-client \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.1.41 \
+&& rm -rf /tmp/openshift* \
+&& ln -s /usr/local/bin/oc-4.4.10 /usr/local/bin/oc
+
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
 && ln -s /opt/kubectx/kubens /usr/local/bin/kubens \
@@ -75,7 +98,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.16" > /root/version.txt
+RUN echo "v1.3.17" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
