@@ -46,12 +46,17 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 
 RUN git config --global http.sslVerify false
 
-RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-18-5 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-17-8 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-16-12 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl-1-15-12 \
-&& chmod +x /usr/local/bin/kubectl-1* \
-&& ln -s /usr/local/bin/kubectl-1-18-5 /usr/local/bin/kubectl \
+RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.1.2/kuberlr_0.1.2_linux_amd64.tar.gz -o /tmp/kuberlr.tar.gz \
+&& tar xzvf /tmp/kuberlr.tar.gz -C /tmp \
+&& cp /tmp/kuberlr*/kuberlr /usr/local/bin/kuberlr \
+&& rm -rf /tmp/kuberlr* \
+&& mkdir -p ~/.kuberlr/linux-amd64 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.18.5 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.17.8 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.16.12 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.15.12 \
+&& chmod +x ~/.kuberlr/linux-amd64/kubectl-1* \
+&& ln -s /usr/local/bin/kuberlr /usr/local/bin/kubectl \
 && kubectl completion bash >/etc/bash_completion.d/kubectl \
 && echo "alias k='kubectl'" >> ~/.bashrc \
 && echo 'complete -F __start_kubectl k' >> ~/.bashrc
@@ -70,7 +75,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.15" > /root/version.txt
+RUN echo "v1.3.16" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
