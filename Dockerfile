@@ -98,7 +98,10 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN echo "v1.3.17" > /root/version.txt
+RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.0/calicoctl -o /usr/local/bin/calicoctl \
+&& chmod +x /usr/local/bin/calicoctl
+
+RUN echo "v1.3.18" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
