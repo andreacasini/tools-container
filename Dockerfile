@@ -11,7 +11,7 @@ RUN dnf update -y \
 && pip install --upgrade paramiko \
 && pip install --upgrade jmespath
 
-RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.6/powershell-6.2.6-1.rhel.7.x86_64.rpm \
+RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.7/powershell-6.2.7-1.rhel.7.x86_64.rpm \
 && pwsh -c 'Install-Module -Name VMware.PowerCLI -Scope AllUsers -SkipPublisherCheck -AcceptLicense -Force' \
 && pwsh -c 'Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false' \
 && dnf install sshpass -y
@@ -47,14 +47,14 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 
 RUN git config --global http.sslVerify false
 
-RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.1.2/kuberlr_0.1.2_linux_amd64.tar.gz -o /tmp/kuberlr.tar.gz \
+RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.3.0/kuberlr_0.3.0_linux_amd64.tar.gz -o /tmp/kuberlr.tar.gz \
 && tar xzvf /tmp/kuberlr.tar.gz -C /tmp \
 && cp /tmp/kuberlr*/kuberlr /usr/local/bin/kuberlr \
 && rm -rf /tmp/kuberlr* \
 && mkdir -p ~/.kuberlr/linux-amd64 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.18.5 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.8/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.17.8 \
-&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.16.12 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.18.6/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.18.6 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.17.9/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.17.9 \
+&& curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.13/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.16.13 \
 && curl -L https://storage.googleapis.com/kubernetes-release/release/v1.15.12/bin/linux/amd64/kubectl -o ~/.kuberlr/linux-amd64/kubectl-1.15.12 \
 && chmod +x ~/.kuberlr/linux-amd64/kubectl-1* \
 && ln -s /usr/local/bin/kuberlr /usr/local/bin/kubectl \
@@ -62,15 +62,20 @@ RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.1.2/kuberlr_0
 && echo "alias k='kubectl'" >> ~/.bashrc \
 && echo 'complete -F __start_kubectl k' >> ~/.bashrc
 
-RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-4.4.10.tar.gz -o /tmp/openshift-client-linux-4.4.10.tar.gz \
+RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.5.3/openshift-client-linux-4.5.3.tar.gz -o /tmp/openshift-client-linux-4.5.3.tar.gz \
+&& mkdir /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.5.3.tar.gz -C /tmp/openshift-client \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.5.3 \
+&& rm -rf /tmp/openshift* \
+&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.13/openshift-client-linux-4.4.13.tar.gz -o /tmp/openshift-client-linux-4.4.13.tar.gz \
 && mkdir /tmp/openshift-client \
 && tar xzvf /tmp/openshift-client-linux-4.4.10.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.4.10 \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.4.13 \
 && rm -rf /tmp/openshift* \
-&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.28/openshift-client-linux-4.3.28.tar.gz -o /tmp/openshift-client-linux-4.3.28.tar.gz \
+&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.29/openshift-client-linux-4.3.29.tar.gz -o /tmp/openshift-client-linux-4.3.29.tar.gz \
 && mkdir /tmp/openshift-client \
 && tar xzvf /tmp/openshift-client-linux-4.3.28.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.3.28 \
+&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.3.29 \
 && rm -rf /tmp/openshift* \
 && curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.36/openshift-client-linux-4.2.36.tar.gz -o /tmp/openshift-client-linux-4.2.36.tar.gz \
 && mkdir /tmp/openshift-client \
@@ -98,10 +103,10 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 && rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
 && helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 
-RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.0/calicoctl -o /usr/local/bin/calicoctl \
+RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1/calicoctl -o /usr/local/bin/calicoctl \
 && chmod +x /usr/local/bin/calicoctl
 
-RUN echo "v1.3.18" > /root/version.txt
+RUN echo "v1.3.19" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
