@@ -69,12 +69,12 @@ RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.5.3/open
 && rm -rf /tmp/openshift* \
 && curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.13/openshift-client-linux-4.4.13.tar.gz -o /tmp/openshift-client-linux-4.4.13.tar.gz \
 && mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.4.10.tar.gz -C /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.4.13.tar.gz -C /tmp/openshift-client \
 && cp /tmp/openshift-client/oc /usr/local/bin/oc-4.4.13 \
 && rm -rf /tmp/openshift* \
 && curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.29/openshift-client-linux-4.3.29.tar.gz -o /tmp/openshift-client-linux-4.3.29.tar.gz \
 && mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.3.28.tar.gz -C /tmp/openshift-client \
+&& tar xzvf /tmp/openshift-client-linux-4.3.29.tar.gz -C /tmp/openshift-client \
 && cp /tmp/openshift-client/oc /usr/local/bin/oc-4.3.29 \
 && rm -rf /tmp/openshift* \
 && curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.36/openshift-client-linux-4.2.36.tar.gz -o /tmp/openshift-client-linux-4.2.36.tar.gz \
@@ -87,7 +87,7 @@ RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.5.3/open
 && tar xzvf /tmp/openshift-client-linux-4.1.41.tar.gz -C /tmp/openshift-client \
 && cp /tmp/openshift-client/oc /usr/local/bin/oc-4.1.41 \
 && rm -rf /tmp/openshift* \
-&& ln -s /usr/local/bin/oc-4.4.10 /usr/local/bin/oc
+&& ln -s /usr/local/bin/oc-4.5.3 /usr/local/bin/oc
 
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
