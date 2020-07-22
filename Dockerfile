@@ -11,6 +11,8 @@ RUN dnf update -y \
 && pip install --upgrade paramiko \
 && pip install --upgrade jmespath
 
+RUN echo "setw -g mouse on" >> ~/.tmux.conf
+
 RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.7/powershell-6.2.7-1.rhel.7.x86_64.rpm \
 && pwsh -c 'Install-Module -Name VMware.PowerCLI -Scope AllUsers -SkipPublisherCheck -AcceptLicense -Force' \
 && pwsh -c 'Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false' \
@@ -106,7 +108,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1/calicoctl -o /usr/local/bin/calicoctl \
 && chmod +x /usr/local/bin/calicoctl
 
-RUN echo "v1.3.21" > /root/version.txt
+RUN echo "v1.3.22" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
