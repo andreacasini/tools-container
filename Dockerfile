@@ -3,7 +3,7 @@ FROM centos
 RUN dnf update -y \
 && dnf install python3-pip -y \
 && dnf install vim nano curl git iproute wget bind-utils libicu epel-release -y \
-&& dnf install screen bash-completion openldap-clients neofetch -y \
+&& dnf install screen bash-completion openldap-clients neofetch tmux -y \
 && pip3 install --upgrade pip \
 && pip install --upgrade ansible \
 && pip install --upgrade pyvmomi \
@@ -106,7 +106,7 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1/calicoctl -o /usr/local/bin/calicoctl \
 && chmod +x /usr/local/bin/calicoctl
 
-RUN echo "v1.3.20" > /root/version.txt
+RUN echo "v1.3.21" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
