@@ -108,7 +108,11 @@ RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.
 RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1/calicoctl -o /usr/local/bin/calicoctl \
 && chmod +x /usr/local/bin/calicoctl
 
-RUN echo "v1.3.23" > /root/version.txt
+RUN curl -L https://github.com/andreazorzetto/yh/releases/download/v0.2.1/yh-linux-amd64.zip | gunzip > /usr/local/bin/yh \
+&& chmod +x /usr/local/bin/yh
+
+
+RUN echo "v1.3.24" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
