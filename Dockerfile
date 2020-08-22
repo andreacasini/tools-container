@@ -111,8 +111,14 @@ RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1
 RUN curl -L https://github.com/andreazorzetto/yh/releases/download/v0.2.1/yh-linux-amd64.zip | gunzip > /usr/local/bin/yh \
 && chmod +x /usr/local/bin/yh
 
+RUN git clone https://github.com/heptiolabs/ktx.git /tmp/ktx \
+&& cp /tmp/ktx/ktx ~/.ktx \
+&& cp /tmp/ktx/ktx-completion.sh ~/.ktx-completion.sh \
+&& echo "source ~/.ktx" >> ~/.bashrc \
+&& echo "source ~/.ktx-completion.sh" >> ~/.bashrc \
+&& rm -rf /tmp/ktx
 
-RUN echo "v1.3.24" > /root/version.txt
+RUN echo "v1.3.25" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
