@@ -13,7 +13,7 @@ RUN dnf update -y \
 
 RUN echo "setw -g mouse on" >> ~/.tmux.conf
 
-RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.7/powershell-6.2.7-1.rhel.7.x86_64.rpm \
+RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-1.rhel.7.x86_64.rpm \
 && pwsh -c 'Install-Module -Name VMware.PowerCLI -Scope AllUsers -SkipPublisherCheck -AcceptLicense -Force' \
 && pwsh -c 'Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false' \
 && dnf install sshpass -y
@@ -21,13 +21,15 @@ RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v6.2.7/p
 RUN yum clean all \
 && rm -rf /var/cache/yum
 
-RUN curl -L https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
+RUN curl -L https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
 && chmod +x /usr/local/bin/terraform
 
-RUN curl -L https://github.com/vmware/govmomi/releases/download/v0.23.0/govc_linux_amd64.gz | gunzip > /usr/local/bin/govc \
-&& chmod +x /usr/local/bin/govc
+RUN curl -L https://github.com/vmware/govmomi/releases/download/v0.25.0/govc_Linux_x86_64.tar.gz -o /tmp/govc.tar.gz \
+&& tar xzvf /tmp/govc.tar.gz -C /tmp \
+&& cp /tmp/govc /usr/local/bin \
+&& rm -rf /tmp/govc*
 
-RUN curl -L https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-v0.15.4-x86_64-unknown-linux-gnu.tar.gz -o /tmp/bat.tar.gz \
+RUN curl -L https://github.com/sharkdp/bat/releases/download/v0.18.0/bat-v0.18.0-x86_64-unknown-linux-gnu.tar.gz -o /tmp/bat.tar.gz \
 && tar xzvf /tmp/bat.tar.gz -C /tmp \
 && cp /tmp/bat-*/bat /usr/local/bin/ && rm -rf /tmp/bat*
 
@@ -49,7 +51,7 @@ RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~
 
 RUN git config --global http.sslVerify false
 
-RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.3.0/kuberlr_0.3.0_linux_amd64.tar.gz -o /tmp/kuberlr.tar.gz \
+RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.3.1/kuberlr_0.3.1_linux_amd64.tar.gz -o /tmp/kuberlr.tar.gz \
 && tar xzvf /tmp/kuberlr.tar.gz -C /tmp \
 && cp /tmp/kuberlr*/kuberlr /usr/local/bin/kuberlr \
 && rm -rf /tmp/kuberlr* \
@@ -64,33 +66,6 @@ RUN curl -L https://github.com/flavio/kuberlr/releases/download/v0.3.0/kuberlr_0
 && echo "alias k='kubectl'" >> ~/.bashrc \
 && echo 'complete -F __start_kubectl k' >> ~/.bashrc
 
-RUN curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.5.3/openshift-client-linux-4.5.3.tar.gz -o /tmp/openshift-client-linux-4.5.3.tar.gz \
-&& mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.5.3.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.5.3 \
-&& rm -rf /tmp/openshift* \
-&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.13/openshift-client-linux-4.4.13.tar.gz -o /tmp/openshift-client-linux-4.4.13.tar.gz \
-&& mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.4.13.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.4.13 \
-&& rm -rf /tmp/openshift* \
-&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.29/openshift-client-linux-4.3.29.tar.gz -o /tmp/openshift-client-linux-4.3.29.tar.gz \
-&& mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.3.29.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.3.29 \
-&& rm -rf /tmp/openshift* \
-&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.36/openshift-client-linux-4.2.36.tar.gz -o /tmp/openshift-client-linux-4.2.36.tar.gz \
-&& mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.2.36.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.2.36 \
-&& rm -rf /tmp/openshift* \
-&& curl -L https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.41/openshift-client-linux-4.1.41.tar.gz -o /tmp/openshift-client-linux-4.1.41.tar.gz \
-&& mkdir /tmp/openshift-client \
-&& tar xzvf /tmp/openshift-client-linux-4.1.41.tar.gz -C /tmp/openshift-client \
-&& cp /tmp/openshift-client/oc /usr/local/bin/oc-4.1.41 \
-&& rm -rf /tmp/openshift* \
-&& ln -s /usr/local/bin/oc-4.5.3 /usr/local/bin/oc
-
 RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx \
 && ln -s /opt/kubectx/kubens /usr/local/bin/kubens \
@@ -99,16 +74,12 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx \
 && git clone --depth 1 https://github.com/junegunn/fzf.git /opt/fzf \
 && /opt/fzf/install --all
 
-RUN curl -L https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz -o /tmp/helm.tar.gz \
+RUN curl -L https://get.helm.sh/helm-v3.5.4-linux-amd64.tar.gz -o /tmp/helm.tar.gz \
 && tar xzvf /tmp/helm.tar.gz -C /tmp \
 && cp /tmp/linux-amd64/helm /usr/local/bin/ \
-&& rm -rf /tmp/helm.tar.gz /tmp/linux-amd64 \
-&& helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+&& rm -rf /tmp/helm.tar.gz /tmp/linux-amd64
 
-RUN curl -L https://github.com/projectcalico/calicoctl/releases/download/v3.15.1/calicoctl -o /usr/local/bin/calicoctl \
-&& chmod +x /usr/local/bin/calicoctl
-
-RUN curl -L https://github.com/andreazorzetto/yh/releases/download/v0.2.1/yh-linux-amd64.zip | gunzip > /usr/local/bin/yh \
+RUN curl -L https://github.com/andreazorzetto/yh/releases/download/v0.4.0/yh-linux-amd64.zip | gunzip > /usr/local/bin/yh \
 && chmod +x /usr/local/bin/yh
 
 RUN git clone https://github.com/heptiolabs/ktx.git /tmp/ktx \
@@ -118,7 +89,7 @@ RUN git clone https://github.com/heptiolabs/ktx.git /tmp/ktx \
 && echo "source ~/.ktx-completion.sh" >> ~/.bashrc \
 && rm -rf /tmp/ktx
 
-RUN echo "v1.3.25" > /root/version.txt
+RUN echo "v1.3.26" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
