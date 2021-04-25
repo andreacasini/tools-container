@@ -1,9 +1,10 @@
-FROM centos
+FROM ubuntu
 
-RUN dnf update -y \
-&& dnf install python3-pip -y \
-&& dnf install vim nano curl git iproute wget bind-utils libicu epel-release -y \
-&& dnf install screen bash-completion openldap-clients neofetch tmux unzip -y \
+RUN apt-get update -y \
+&& TZ="Europe/Rome" DEBIAN_FRONTEND="noninteractive" apt-get install tzdata -y \
+&& apt-get install python3-pip -y \
+&& apt-get install vim nano curl git wget -y \
+&& apt-get install screen bash-completion ldap-utils neofetch tmux unzip liblttng-ust0 -y \
 && pip3 install --upgrade pip \
 && pip install --upgrade ansible \
 && pip install --upgrade pyvmomi \
@@ -13,13 +14,16 @@ RUN dnf update -y \
 
 RUN echo "setw -g mouse on" >> ~/.tmux.conf
 
-RUN rpm -ivh https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-1.rhel.7.x86_64.rpm \
+RUN apt --fix-broken install -y
+
+RUN curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell_7.1.3-1.ubuntu.20.04_amd64.deb -o /tmp/powershell.deb \
+&& dpkg -i /tmp/powershell.deb \
 && pwsh -c 'Install-Module -Name VMware.PowerCLI -Scope AllUsers -SkipPublisherCheck -AcceptLicense -Force' \
 && pwsh -c 'Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false' \
-&& dnf install sshpass -y
+&& apt install sshpass -y \
+&& rm -f /tmp/powershell.deb
 
-RUN yum clean all \
-&& rm -rf /var/cache/yum
+RUN apt autoremove --purge
 
 RUN curl -L https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip | gunzip > /usr/local/bin/terraform \
 && chmod +x /usr/local/bin/terraform
@@ -32,9 +36,6 @@ RUN curl -L https://github.com/vmware/govmomi/releases/download/v0.25.0/govc_Lin
 RUN curl -L https://github.com/sharkdp/bat/releases/download/v0.18.0/bat-v0.18.0-x86_64-unknown-linux-gnu.tar.gz -o /tmp/bat.tar.gz \
 && tar xzvf /tmp/bat.tar.gz -C /tmp \
 && cp /tmp/bat-*/bat /usr/local/bin/ && rm -rf /tmp/bat*
-
-RUN rm -f /root/anaconda* \
-&& rm -f /root/original*
 
 RUN echo "export PS1='\[\e[31;1m\]\u@\h: \[\033[01;34m\]\W # \[\033[00m\]'" >> ~/.bashrc \
 && echo "alias ls='ls --color'" >> ~/.bashrc \
@@ -89,7 +90,7 @@ RUN git clone https://github.com/heptiolabs/ktx.git /tmp/ktx \
 && echo "source ~/.ktx-completion.sh" >> ~/.bashrc \
 && rm -rf /tmp/ktx
 
-RUN echo "v1.3.26" > /root/version.txt
+RUN echo "v2.0.0" > /root/version.txt
 
 WORKDIR /root
 CMD [ "/bin/bash" ]
